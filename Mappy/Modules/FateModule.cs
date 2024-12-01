@@ -20,7 +20,7 @@ public class FateModule : ModuleBase {
                 markerInfo.PrimaryText = () => $"Lv. {fate.Value->Level} {fate.Value->Name}";
 
                 if (timeRemaining >= TimeSpan.Zero) {
-                    markerInfo.SecondaryText = () => $"Time Remaining {timeRemaining:mm\\:ss}\nProgress {fate.Value->Progress}%";
+                    markerInfo.SecondaryText = () => $"剩余时间 {timeRemaining:mm\\:ss}\n进度 {fate.Value->Progress}%";
 
                     if (timeRemaining.TotalSeconds <= 300) {
                         markerInfo.RadiusColor = fate.GetColor();
@@ -28,7 +28,7 @@ public class FateModule : ModuleBase {
                     }
                 }
                 else {
-                    markerInfo.SecondaryText = () => $"Progress {fate.Value->Progress}%";
+                    markerInfo.SecondaryText = () => $"进度 {fate.Value->Progress}%";
                 }
                 
                 return true;

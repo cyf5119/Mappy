@@ -16,21 +16,21 @@ public class Teleporter {
             var showMessage = showChatMessageIpc.InvokeFunc();
 
             if (!didTeleport) {
-                UserError("Cannot teleport in this situation.");
+                UserError("在这种情况下无法传送。");
             }
             else if (showMessage) {
                 Service.ChatGui.Print(new XivChatEntry {
                     Message = new SeStringBuilder()
                         .AddUiForeground("[Mappy] ", 45)
                         .AddUiForeground($"[Teleport] ", 62)
-                        .AddText($"Teleporting to ")
-                        .AddUiForeground(aetheryte.PlaceName.Value?.Name ?? "Unable to read name", 576)
+                        .AddText($"传送到 ")
+                        .AddUiForeground(aetheryte.PlaceName.Value?.Name ?? "无法读取名称", 576)
                         .Build(),
                 });
             }
         } catch (IpcNotReadyError) {
-            Service.Log.Error("Teleport IPC not found");
-            UserError("To use the teleport function, you must install the 'Teleporter' plugin");
+            Service.Log.Error("找不到传送IPC");
+            UserError("要使用传送功能，必须安装“Teleporter”插件");
         }
     }
 

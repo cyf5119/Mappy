@@ -35,10 +35,10 @@ public static class MapMarkerInfoExtensions {
                 _ => null,
             },
             SecondaryText = marker.DataType switch {
-                1 when !DrawHelpers.IsDisallowedIcon(marker.MapMarker.IconId) => () => $"Open Map {Service.DataManager.GetExcelSheet<Map>()!.GetRow(marker.DataKey)?.PlaceName.Value?.Name ?? "Unable to read target map name."}",
-                2 => () => $"Instance Link {marker.DataKey}",
-                3 => () => $"Teleport to {Service.DataManager.GetExcelSheet<Aetheryte>()!.GetRow(marker.DataKey)?.PlaceName.Value?.Name ?? "Unable to read aetheryte name"} {GetAetheryteTeleportCost(marker.DataKey)}",
-                4 when GetAetheryteForAethernet(marker.DataKey) is not null => () => $"Teleport to {GetAetheryteForAethernet(marker.DataKey)?.PlaceName.Value?.Name ?? "Unable to read aetheryte name"} {GetAetheryteTeleportCost(GetAetheryteForAethernet(marker.DataKey)!.RowId)}",
+                1 when !DrawHelpers.IsDisallowedIcon(marker.MapMarker.IconId) => () => $"打开地图 {Service.DataManager.GetExcelSheet<Map>()!.GetRow(marker.DataKey)?.PlaceName.Value?.Name ?? "无法读取目标地图名称。"}",
+                2 => () => $"实例链接 {marker.DataKey}",
+                3 => () => $"传送到 {Service.DataManager.GetExcelSheet<Aetheryte>()!.GetRow(marker.DataKey)?.PlaceName.Value?.Name ?? "无法读取以太之光名称"} {GetAetheryteTeleportCost(marker.DataKey)}",
+                4 when GetAetheryteForAethernet(marker.DataKey) is not null => () => $"传送到 {GetAetheryteForAethernet(marker.DataKey)?.PlaceName.Value?.Name ?? "无法读取以太之光名称"} {GetAetheryteTeleportCost(GetAetheryteForAethernet(marker.DataKey)!.RowId)}",
                 _ => null,
             },
         });

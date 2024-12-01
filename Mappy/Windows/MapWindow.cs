@@ -104,8 +104,8 @@ public class MapWindow : Window {
             if (!renderChild) return;
             if (!System.SystemConfig.AcceptedSpoilerWarning) {
                 using (ImRaii.PushColor(ImGuiCol.Text, KnownColor.Orange.Vector())) {
-                    const string warningLine1 = "Warning, Mappy does not protect you from spoilers and will show everything.";
-                    const string warningLine2 = "Do not use Mappy if you are not comfortable with this.";
+                    const string warningLine1 = "警告，Mappy 并没有防剧透，会显示所有东西。";
+                    const string warningLine2 = "若引起不适，请禁用 Mappy。";
 
                     ImGui.SetCursorPos(ImGui.GetContentRegionAvail() / 2.0f - (ImGui.CalcTextSize(warningLine1) * 2.0f) with { X = 0.0f });
                     ImGuiHelpers.CenteredText(warningLine1);
@@ -115,14 +115,14 @@ public class MapWindow : Window {
                 ImGuiHelpers.ScaledDummy(30.0f);
                 ImGui.SetCursorPosX(ImGui.GetContentRegionAvail().X / 3.0f);
                 using (ImRaii.Disabled(!(ImGui.GetIO().KeyShift && ImGui.GetIO().KeyCtrl))) {
-                    if (ImGui.Button("I understand", new Vector2(ImGui.GetContentRegionAvail().X / 2.0f, 23.0f * ImGuiHelpers.GlobalScale))) {
+                    if (ImGui.Button("我明白了", new Vector2(ImGui.GetContentRegionAvail().X / 2.0f, 23.0f * ImGuiHelpers.GlobalScale))) {
                         System.SystemConfig.AcceptedSpoilerWarning = true;
                         SystemConfig.Save();
                     }
                     
                     using (ImRaii.PushStyle(ImGuiStyleVar.Alpha, 1.0f)) {
                         if (ImGui.IsItemHovered(ImGuiHoveredFlags.AllowWhenDisabled)) {
-                            ImGui.SetTooltip("Hold Shift + Control while clicking activate button");
+                            ImGui.SetTooltip("按住 Shift + Control 时点击激活按钮");
                         }
                     }
                 }
@@ -180,7 +180,7 @@ public class MapWindow : Window {
             }
         }
 
-        WindowName = $"Mappy Map Window{subLocationString}###MappyMapWindow";
+        WindowName = $"Mappy 地图窗口{subLocationString}###MappyMapWindow";
         
         lastMapId = AgentMap.Instance()->SelectedMapId;
         lastAreaPlaceNameId = TerritoryInfo.Instance()->AreaPlaceNameId;
@@ -268,7 +268,7 @@ public class MapWindow : Window {
         
         ImGui.SetCursorPos(new Vector2(5.0f, 5.0f));
         
-        if (MappyGuiTweaks.IconButton(FontAwesomeIcon.ArrowUp, "up", "Open Parent Map")) {
+        if (MappyGuiTweaks.IconButton(FontAwesomeIcon.ArrowUp, "up", "打开上级地图")) {
             var valueArgs = new AtkValue {
                 Type = ValueType.Int, 
                 Int = 5,
@@ -280,7 +280,7 @@ public class MapWindow : Window {
         
         ImGui.SameLine();
         
-        if (MappyGuiTweaks.IconButton(FontAwesomeIcon.LayerGroup, "layers", "Show Map Layers")) {
+        if (MappyGuiTweaks.IconButton(FontAwesomeIcon.LayerGroup, "layers", "显示地图图层")) {
             ImGui.OpenPopup("Mappy_Show_Layers");
         }
 
@@ -289,7 +289,7 @@ public class MapWindow : Window {
         ImGui.SameLine();
         
         using (var _ = ImRaii.PushColor(ImGuiCol.Button, ImGui.GetStyle().Colors[(int) ImGuiCol.ButtonActive], System.SystemConfig.FollowPlayer)) {
-            if (MappyGuiTweaks.IconButton(FontAwesomeIcon.LocationArrow, "follow", "Toggle Follow Player")) {
+            if (MappyGuiTweaks.IconButton(FontAwesomeIcon.LocationArrow, "follow", "是否跟随玩家")) {
                 System.SystemConfig.FollowPlayer = !System.SystemConfig.FollowPlayer;
         
                 if (System.SystemConfig.FollowPlayer) {
@@ -300,7 +300,7 @@ public class MapWindow : Window {
         
         ImGui.SameLine();
         
-        if (MappyGuiTweaks.IconButton(FontAwesomeIcon.ArrowsToCircle, "centerPlayer", "Center on Player") && Service.ClientState.LocalPlayer is not null) {
+        if (MappyGuiTweaks.IconButton(FontAwesomeIcon.ArrowsToCircle, "centerPlayer", "以玩家居中") && Service.ClientState.LocalPlayer is not null) {
             // Don't center on player if we are already following the player.
             if (!System.SystemConfig.FollowPlayer) {
                 System.IntegrationsController.OpenOccupiedMap();
@@ -310,14 +310,14 @@ public class MapWindow : Window {
         
         ImGui.SameLine();
         
-        if (MappyGuiTweaks.IconButton(FontAwesomeIcon.MapMarked, "centerMap", "Center on Map")) {
+        if (MappyGuiTweaks.IconButton(FontAwesomeIcon.MapMarked, "centerMap", "以地图居中")) {
             System.SystemConfig.FollowPlayer = false;
             System.MapRenderer.DrawOffset = Vector2.Zero;
         }
         
         ImGui.SameLine();
         
-        if (MappyGuiTweaks.IconButton(FontAwesomeIcon.Search, "search", "Search for Map")) {
+        if (MappyGuiTweaks.IconButton(FontAwesomeIcon.Search, "search", "搜索地图")) {
             System.WindowManager.AddWindow(new MapSelectionWindow {
                 SingleSelectionCallback = selection => {
                     if (selection?.Map != null) {
@@ -336,7 +336,7 @@ public class MapWindow : Window {
         
         ImGui.SameLine();
         ImGui.SetCursorPosX(ImGui.GetContentRegionMax().X - 25.0f * ImGuiHelpers.GlobalScale - ImGui.GetStyle().ItemSpacing.X);
-        if (MappyGuiTweaks.IconButton(FontAwesomeIcon.Cog, "settings", "Open Settings")) {
+        if (MappyGuiTweaks.IconButton(FontAwesomeIcon.Cog, "settings", "打开设置")) {
             System.ConfigWindow.UnCollapseOrShow();
             ImGui.SetWindowFocus(System.ConfigWindow.WindowName);
         }
@@ -357,7 +357,7 @@ public class MapWindow : Window {
         var scale = AgentMap.Instance()->SelectedMapSizeFactor;
 
         var characterMapPosition = MapUtil.WorldToMap(Service.ClientState.LocalPlayer?.Position ?? Vector3.Zero, offsetX, offsetY, 0, (uint)scale);
-        var characterPosition = $"Character  {characterMapPosition.X:F1}  {characterMapPosition.Y:F1}";
+        var characterPosition = $"角色  {characterMapPosition.X:F1}  {characterMapPosition.Y:F1}";
         
         ImGui.SetCursorPosY(ImGui.GetCursorPosY() + 2.0f * ImGuiHelpers.GlobalScale);
 
@@ -377,7 +377,7 @@ public class MapWindow : Window {
             cursorPosition /= AgentMap.Instance()->SelectedMapSizeFactorFloat;
  
             var cursorMapPosition = MapUtil.WorldToMap(new Vector3(cursorPosition.X, 0.0f, cursorPosition.Y), offsetX, offsetY, 0, (uint)scale);
-            var cursorPositionString = $"Cursor  {cursorMapPosition.X:F1}  {cursorMapPosition.Y:F1}";
+            var cursorPositionString = $"光标  {cursorMapPosition.X:F1}  {cursorMapPosition.Y:F1}";
             var cursorStringSize = ImGui.CalcTextSize(characterPosition);
             ImGui.SameLine(ImGui.GetContentRegionMax().X * 2.0f / 3.0f - cursorStringSize.X / 2.0f);
             ImGui.TextColored(System.SystemConfig.CoordinateTextColor, cursorPositionString);
@@ -415,7 +415,7 @@ public class MapWindow : Window {
         using var contextMenu = ImRaii.ContextPopup("Mappy_Context_Menu");
         if (!contextMenu) return;
         
-        if (ImGui.MenuItem("Place Flag")) {
+        if (ImGui.MenuItem("放置标记")) {
             var cursorPosition = ImGui.GetMousePosOnOpeningCurrentPopup(); // Get initial cursor position (screen relative)
             var mapChildOffset = MapDrawOffset; // Get the screen position we started drawing the map at
             var mapDrawOffset = System.MapRenderer.DrawPosition; // Get the map texture top left offset vector
@@ -428,35 +428,35 @@ public class MapWindow : Window {
             AgentChatLog.Instance()->InsertTextCommandParam(1048, false);
         }
         
-        if (ImGui.MenuItem("Remove Flag", AgentMap.Instance()->IsFlagMarkerSet is not 0)) {
+        if (ImGui.MenuItem("移除标记", AgentMap.Instance()->IsFlagMarkerSet is not 0)) {
             AgentMap.Instance()->IsFlagMarkerSet = 0;
         }
 
         ImGuiHelpers.ScaledDummy(5.0f);
 
-        if (ImGui.MenuItem("Center on Player", Service.ClientState.LocalPlayer is not null) && Service.ClientState.LocalPlayer is not null) {
+        if (ImGui.MenuItem("以玩家居中", Service.ClientState.LocalPlayer is not null) && Service.ClientState.LocalPlayer is not null) {
             System.IntegrationsController.OpenOccupiedMap();
             System.MapRenderer.CenterOnGameObject(Service.ClientState.LocalPlayer);
         }
         
-        if (ImGui.MenuItem("Center on Map")) {
+        if (ImGui.MenuItem("以地图居中")) {
             System.SystemConfig.FollowPlayer = false;
             System.MapRenderer.DrawOffset = Vector2.Zero;
         }
 
         ImGuiHelpers.ScaledDummy(5.0f);
         
-        if (ImGui.MenuItem("Lock Zoom", "", ref System.SystemConfig.ZoomLocked)) {
+        if (ImGui.MenuItem("锁定缩放", "", ref System.SystemConfig.ZoomLocked)) {
             SystemConfig.Save();
         }
         
         ImGuiHelpers.ScaledDummy(5.0f);
         
-        if (ImGui.MenuItem("Open Quest List", System.WindowManager.GetWindow<QuestListWindow>() is null))  {
+        if (ImGui.MenuItem("打开任务列表", System.WindowManager.GetWindow<QuestListWindow>() is null))  {
             System.WindowManager.AddWindow(new QuestListWindow(), WindowFlags.OpenImmediately | WindowFlags.RequireLoggedIn);
         }
 
-        if (ImGui.MenuItem("Open Fate List", System.WindowManager.GetWindow<FateListWindow>() is null)) {
+        if (ImGui.MenuItem("打开危命列表", System.WindowManager.GetWindow<FateListWindow>() is null)) {
             System.WindowManager.AddWindow(new FateListWindow(), WindowFlags.OpenImmediately | WindowFlags.RequireLoggedIn);
         }
     }
@@ -492,11 +492,11 @@ public class MapWindow : Window {
                 .ToList();
 
             if (layers.Count is 0) {
-                ImGui.Text("No layers for this map");
+                ImGui.Text("该地图没有图层");
             }
         
             foreach (var layer in layers) {
-                if (ImGui.MenuItem(layer.PlaceNameSub.Value?.Name ?? "Unable to Parse Name", "", AgentMap.Instance()->SelectedMapId == layer.RowId)) {
+                if (ImGui.MenuItem(layer.PlaceNameSub.Value?.Name ?? "无法解析名称", "", AgentMap.Instance()->SelectedMapId == layer.RowId)) {
                     System.IntegrationsController.OpenMap(layer.RowId);
                     System.SystemConfig.FollowPlayer = false;
                     System.MapRenderer.DrawOffset = Vector2.Zero;

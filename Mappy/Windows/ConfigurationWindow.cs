@@ -24,7 +24,7 @@ public class ConfigurationWindow : Window {
         new PlayerOptionsTab(),
     ]);
     
-    public ConfigurationWindow() : base("Mappy Configuration Window", new Vector2(500.0f, 580.0f)) {
+    public ConfigurationWindow() : base("Mappy 配置窗口", new Vector2(500.0f, 580.0f)) {
         System.CommandManager.RegisterCommand(new CommandHandler {
             Delegate = _ => System.ConfigWindow.Toggle(),
             ActivationPath = "/",
@@ -36,75 +36,75 @@ public class ConfigurationWindow : Window {
 }
 
 public class MapFunctionsTab : ITabItem {
-    public string Name => "Map Functions";
+    public string Name => "地图功能";
     
     public bool Disabled => false;
     
     public void Draw() {
         var configChanged = false;
         
-        ImGuiTweaks.Header("Key Input");
+        ImGuiTweaks.Header("按键输入");
         using (ImRaii.PushIndent()) {
-            configChanged |= ImGui.Checkbox("Ignore Escape Key", ref System.SystemConfig.IgnoreEscapeKey);
+            configChanged |= ImGui.Checkbox("忽略ESC键", ref System.SystemConfig.IgnoreEscapeKey);
         }
         
-        ImGuiTweaks.Header("Zoom Options");
+        ImGuiTweaks.Header("缩放选项");
         using (ImRaii.PushIndent()) {
-            configChanged |= ImGui.Checkbox("Use Linear Zoom", ref System.SystemConfig.UseLinearZoom);
-            configChanged |= ImGui.Checkbox("Scale icons with zoom", ref System.SystemConfig.ScaleWithZoom);
-            configChanged |= ImGuiTweaks.Checkbox("Auto Zoom", ref System.SystemConfig.AutoZoom, "Automatically sets zoom to a reasonable value relative to the map size.");
+            configChanged |= ImGui.Checkbox("使用线性缩放", ref System.SystemConfig.UseLinearZoom);
+            configChanged |= ImGui.Checkbox("图标尺寸跟随缩放", ref System.SystemConfig.ScaleWithZoom);
+            configChanged |= ImGuiTweaks.Checkbox("自动缩放", ref System.SystemConfig.AutoZoom, "自动根据地图大小将缩放设置为一个合理的值。");
             
             ImGuiHelpers.ScaledDummy(5.0f);
             
-            configChanged |= ImGui.SliderFloat("Zoom Speed", ref System.SystemConfig.ZoomSpeed, 0.001f, 0.500f);
-            configChanged |= ImGui.SliderFloat("Icon Scale", ref System.SystemConfig.IconScale, 0.10f, 3.0f);
+            configChanged |= ImGui.SliderFloat("缩放速度", ref System.SystemConfig.ZoomSpeed, 0.001f, 0.500f);
+            configChanged |= ImGui.SliderFloat("图标尺寸", ref System.SystemConfig.IconScale, 0.10f, 3.0f);
         }
         
-        ImGuiTweaks.Header("When Opening Map");
+        ImGuiTweaks.Header("打开地图时");
         using (ImRaii.PushIndent()) {
-            configChanged |= ImGui.Checkbox("Follow On Open", ref System.SystemConfig.FollowOnOpen);   
+            configChanged |= ImGui.Checkbox("跟随打开", ref System.SystemConfig.FollowOnOpen);   
             
             ImGuiHelpers.ScaledDummy(5.0f);
 
             DrawCenterModeRadio();
         }
         
-        ImGuiTweaks.Header("Link Behaviors");
+        ImGuiTweaks.Header("链接行为");
         using (ImRaii.PushIndent()) {
-            configChanged |= ImGui.Checkbox("Center on Flags", ref System.SystemConfig.CenterOnFlag);
-            configChanged |= ImGui.Checkbox("Center on Gathering Areas", ref System.SystemConfig.CenterOnGathering);
-            configChanged |= ImGui.Checkbox("Center on Quest", ref System.SystemConfig.CenterOnQuest);
+            configChanged |= ImGui.Checkbox("以旗帜居中", ref System.SystemConfig.CenterOnFlag);
+            configChanged |= ImGui.Checkbox("以采集区域居中", ref System.SystemConfig.CenterOnGathering);
+            configChanged |= ImGui.Checkbox("以任务居中", ref System.SystemConfig.CenterOnQuest);
         }
         
-        ImGuiTweaks.Header("Misc Options");
+        ImGuiTweaks.Header("杂项");
         using (ImRaii.PushIndent()) {
-            configChanged |= ImGui.Checkbox("Show Misc Tooltips", ref System.SystemConfig.ShowMiscTooltips);
-            configChanged |= ImGui.Checkbox("Lock Map on Center", ref System.SystemConfig.LockCenterOnMap);
-            configChanged |= ImGui.Checkbox("Show Other Players", ref System.SystemConfig.ShowPlayers);
+            configChanged |= ImGui.Checkbox("显示其他工具提示", ref System.SystemConfig.ShowMiscTooltips);
+            configChanged |= ImGui.Checkbox("锁定地图居中", ref System.SystemConfig.LockCenterOnMap);
+            configChanged |= ImGui.Checkbox("显示其他玩家", ref System.SystemConfig.ShowPlayers);
             
             ImGuiHelpers.ScaledDummy(5.0f);
             
-            configChanged |= ImGui.Checkbox("Debug Mode", ref System.SystemConfig.DebugMode);
+            configChanged |= ImGui.Checkbox("调试模式", ref System.SystemConfig.DebugMode);
         }
         
-        ImGuiTweaks.Header("Toolbar");
+        ImGuiTweaks.Header("工具栏");
         using (ImRaii.PushIndent()) {
-            configChanged |= ImGui.Checkbox("Always Show", ref System.SystemConfig.AlwaysShowToolbar);
-            configChanged |= ImGui.Checkbox("Show On Hover", ref System.SystemConfig.ShowToolbarOnHover);
+            configChanged |= ImGui.Checkbox("始终显示", ref System.SystemConfig.AlwaysShowToolbar);
+            configChanged |= ImGui.Checkbox("悬停时显示", ref System.SystemConfig.ShowToolbarOnHover);
             
             ImGuiHelpers.ScaledDummy(5.0f);
-            configChanged |= ImGui.DragFloat("Opacity##toolbar", ref System.SystemConfig.ToolbarFade, 0.01f, 0.0f, 1.0f);
+            configChanged |= ImGui.DragFloat("不透明度##toolbar", ref System.SystemConfig.ToolbarFade, 0.01f, 0.0f, 1.0f);
         }
         
-        ImGuiTweaks.Header("Coordinates");
+        ImGuiTweaks.Header("坐标");
         using (ImRaii.PushIndent()) {
-            configChanged |= ImGui.Checkbox("Show Coordinate Bar", ref System.SystemConfig.ShowCoordinateBar);
+            configChanged |= ImGui.Checkbox("显示坐标栏", ref System.SystemConfig.ShowCoordinateBar);
             
             ImGuiHelpers.ScaledDummy(5.0f);
-            configChanged |= ImGuiTweaks.ColorEditWithDefault("Text Color", ref System.SystemConfig.CoordinateTextColor, KnownColor.White.Vector());
+            configChanged |= ImGuiTweaks.ColorEditWithDefault("文字颜色", ref System.SystemConfig.CoordinateTextColor, KnownColor.White.Vector());
 
             ImGuiHelpers.ScaledDummy(5.0f);
-            configChanged |= ImGui.DragFloat("Opacity##coordinatebar", ref System.SystemConfig.CoordinateBarFade, 0.01f, 0.0f, 1.0f);
+            configChanged |= ImGui.DragFloat("不透明度##coordinatebar", ref System.SystemConfig.CoordinateBarFade, 0.01f, 0.0f, 1.0f);
         }
         
         if (configChanged) {
@@ -128,49 +128,49 @@ public class MapFunctionsTab : ITabItem {
         }
         
         ImGui.SameLine(); 
-        ImGui.Text("\t\tCenter on Open");
+        ImGui.Text("\t\t开启时居中");
     }
 }
 
 public class StyleOptionsTab : ITabItem {
-    public string Name => "Style";
+    public string Name => "样式";
     
     public bool Disabled => false;
     
     public void Draw() {
         var configChanged = false;
         
-        ImGuiTweaks.Header("Window Options");
+        ImGuiTweaks.Header("窗口选项");
         using (ImRaii.PushIndent()) {
-            configChanged |= ImGui.Checkbox("Keep Open", ref System.SystemConfig.KeepOpen);
-            configChanged |= ImGui.Checkbox("Lock Window Position", ref System.SystemConfig.LockWindow);
-            configChanged |= ImGui.Checkbox("Hide Window Frame", ref System.SystemConfig.HideWindowFrame);
-            configChanged |= ImGui.Checkbox("Enable Shift + Drag to Move Window Frame", ref System.SystemConfig.EnableShiftDragMove);
+            configChanged |= ImGui.Checkbox("保持打开", ref System.SystemConfig.KeepOpen);
+            configChanged |= ImGui.Checkbox("锁定窗口位置", ref System.SystemConfig.LockWindow);
+            configChanged |= ImGui.Checkbox("隐藏窗口边框", ref System.SystemConfig.HideWindowFrame);
+            configChanged |= ImGui.Checkbox("启用 Shift + 拖动来移动窗口边框", ref System.SystemConfig.EnableShiftDragMove);
         }
         
-        ImGuiTweaks.Header("Window Hiding");
+        ImGuiTweaks.Header("窗口隐藏");
         using (ImRaii.PushIndent()) {
-            configChanged |= ImGui.Checkbox("Hide With Game GUI", ref System.SystemConfig.HideWithGameGui);
-            configChanged |= ImGui.Checkbox("Hide Between Areas", ref System.SystemConfig.HideBetweenAreas);
-            configChanged |= ImGui.Checkbox("Hide in Duties", ref System.SystemConfig.HideInDuties);
-            configChanged |= ImGui.Checkbox("Hide in Combat", ref System.SystemConfig.HideInCombat);
+            configChanged |= ImGui.Checkbox("在打开游戏界面时隐藏", ref System.SystemConfig.HideWithGameGui);
+            configChanged |= ImGui.Checkbox("在切换区域时隐藏", ref System.SystemConfig.HideBetweenAreas);
+            configChanged |= ImGui.Checkbox("在副本中隐藏", ref System.SystemConfig.HideInDuties);
+            configChanged |= ImGui.Checkbox("在战斗状态时隐藏", ref System.SystemConfig.HideInCombat);
         }
         
-        ImGuiTweaks.Header("Window Title");
+        ImGuiTweaks.Header("窗口标题");
         using (ImRaii.PushIndent()) {
-            configChanged |= ImGui.Checkbox("Show Region Text", ref System.SystemConfig.ShowRegionLabel);
-            configChanged |= ImGui.Checkbox("Show Map Text", ref System.SystemConfig.ShowMapLabel);
-            configChanged |= ImGui.Checkbox("Show Area Text", ref System.SystemConfig.ShowAreaLabel);
-            configChanged |= ImGui.Checkbox("Show Sub-Area Text", ref System.SystemConfig.ShowSubAreaLabel);
+            configChanged |= ImGui.Checkbox("显示区域文本", ref System.SystemConfig.ShowRegionLabel);
+            configChanged |= ImGui.Checkbox("显示地图文本", ref System.SystemConfig.ShowMapLabel);
+            configChanged |= ImGui.Checkbox("显示地区文本", ref System.SystemConfig.ShowAreaLabel);
+            configChanged |= ImGui.Checkbox("显示子地区文本", ref System.SystemConfig.ShowSubAreaLabel);
         }
         
-        ImGuiTweaks.Header("Window Location");
+        ImGuiTweaks.Header("窗口位置");
         using (ImRaii.PushIndent()) {
-            configChanged |= ImGui.DragFloat2("Window Position", ref System.SystemConfig.WindowPosition);
-            configChanged |= ImGui.DragFloat2("Window Size", ref System.SystemConfig.WindowSize);
+            configChanged |= ImGui.DragFloat2("窗口位置", ref System.SystemConfig.WindowPosition);
+            configChanged |= ImGui.DragFloat2("窗口尺寸", ref System.SystemConfig.WindowSize);
         }
         
-        ImGuiTweaks.Header("Fade Options");
+        ImGuiTweaks.Header("淡化选项");
         using (ImRaii.PushIndent()) {
             using (var columns = ImRaii.Table("fade_options_toggles", 2)) {
                 if (!columns) return;
@@ -200,13 +200,13 @@ public class StyleOptionsTab : ITabItem {
                 } 
             }
 
-            configChanged |= ImGui.DragFloat("Fade Opacity", ref System.SystemConfig.FadePercent, 0.01f, 0.05f, 1.0f);
+            configChanged |= ImGui.DragFloat("淡化不透明度", ref System.SystemConfig.FadePercent, 0.01f, 0.05f, 1.0f);
         }
         
-        ImGuiTweaks.Header("Area Style");
+        ImGuiTweaks.Header("区域风格");
         using (ImRaii.PushIndent()) {
-            configChanged |= ImGuiTweaks.ColorEditWithDefault("Area Color", ref System.SystemConfig.AreaColor, KnownColor.CornflowerBlue.Vector() with { W = 0.33f });
-            configChanged |= ImGuiTweaks.ColorEditWithDefault("Area Outline Color", ref System.SystemConfig.AreaOutlineColor, KnownColor.CornflowerBlue.Vector() with { W = 0.30f });
+            configChanged |= ImGuiTweaks.ColorEditWithDefault("区域颜色", ref System.SystemConfig.AreaColor, KnownColor.CornflowerBlue.Vector() with { W = 0.33f });
+            configChanged |= ImGuiTweaks.ColorEditWithDefault("区域轮廓颜色", ref System.SystemConfig.AreaOutlineColor, KnownColor.CornflowerBlue.Vector() with { W = 0.30f });
         }
 
         if (configChanged) {
@@ -222,41 +222,41 @@ public class StyleOptionsTab : ITabItem {
 }
 
 public class PlayerOptionsTab : ITabItem {
-    public string Name => "Player";
+    public string Name => "玩家";
     
     public bool Disabled => false;
     
     public void Draw() {
         var configChanged = false;
         
-        ImGuiTweaks.Header("Cone Options");
+        ImGuiTweaks.Header("锥体选项");
         using (ImRaii.PushIndent()) {
-            configChanged |= ImGui.Checkbox("Scale Player Cone", ref System.SystemConfig.ScalePlayerCone);
+            configChanged |= ImGui.Checkbox("缩放玩家锥体", ref System.SystemConfig.ScalePlayerCone);
 
             ImGuiHelpers.ScaledDummy(5.0f);
-            configChanged |= ImGui.DragFloat("Cone Size", ref System.SystemConfig.ConeSize, 0.25f);
+            configChanged |= ImGui.DragFloat("锥体尺寸", ref System.SystemConfig.ConeSize, 0.25f);
 
             ImGuiHelpers.ScaledDummy(5.0f);
-            configChanged |= ImGuiTweaks.ColorEditWithDefault("Cone Color", ref System.SystemConfig.PlayerConeColor, KnownColor.CornflowerBlue.Vector() with { W = 0.33f });
-            configChanged |= ImGuiTweaks.ColorEditWithDefault("Cone Outline Color", ref System.SystemConfig.PlayerConeOutlineColor, KnownColor.CornflowerBlue.Vector() with { W = 1.00f });
+            configChanged |= ImGuiTweaks.ColorEditWithDefault("锥体颜色", ref System.SystemConfig.PlayerConeColor, KnownColor.CornflowerBlue.Vector() with { W = 0.33f });
+            configChanged |= ImGuiTweaks.ColorEditWithDefault("锥体轮廓颜色", ref System.SystemConfig.PlayerConeOutlineColor, KnownColor.CornflowerBlue.Vector() with { W = 1.00f });
         }
         
-        ImGuiTweaks.Header("Radar Options");
+        ImGuiTweaks.Header("雷达选项");
         using (ImRaii.PushIndent()) {
-            configChanged |= ImGui.Checkbox("Show Radar Radius", ref System.SystemConfig.ShowRadar);
+            configChanged |= ImGui.Checkbox("显示雷达半径", ref System.SystemConfig.ShowRadar);
 
             ImGuiHelpers.ScaledDummy(5.0f);
             
-            configChanged |= ImGuiTweaks.ColorEditWithDefault("Radar Area Color", ref System.SystemConfig.RadarColor, KnownColor.Gray.Vector() with { W = 0.10f });
-            configChanged |= ImGuiTweaks.ColorEditWithDefault("Radar Outline Color", ref System.SystemConfig.RadarOutlineColor, KnownColor.Gray.Vector() with { W = 0.30f });
+            configChanged |= ImGuiTweaks.ColorEditWithDefault("雷达区域颜色", ref System.SystemConfig.RadarColor, KnownColor.Gray.Vector() with { W = 0.10f });
+            configChanged |= ImGuiTweaks.ColorEditWithDefault("雷达轮廓颜色", ref System.SystemConfig.RadarOutlineColor, KnownColor.Gray.Vector() with { W = 0.30f });
         }
         
-        ImGuiTweaks.Header("Player Icon Options");
+        ImGuiTweaks.Header("玩家图标选项");
         using (ImRaii.PushIndent()) {
-            configChanged |= ImGui.Checkbox("Show Player Icon", ref System.SystemConfig.ShowPlayerIcon);
+            configChanged |= ImGui.Checkbox("显示玩家图标", ref System.SystemConfig.ShowPlayerIcon);
             
             ImGuiHelpers.ScaledDummy(5.0f);
-            configChanged |= ImGui.DragFloat("Player Icon Size", ref System.SystemConfig.PlayerIconScale, 0.05f);
+            configChanged |= ImGui.DragFloat("玩家图标尺寸", ref System.SystemConfig.PlayerIconScale, 0.05f);
         }
 
         if (configChanged) {
@@ -266,7 +266,7 @@ public class PlayerOptionsTab : ITabItem {
 }
 
 public class IconConfigurationTab : ITabItem {
-    public string Name => "Icon Settings";
+    public string Name => "图标设置";
     
     public bool Disabled => false;
 
@@ -301,7 +301,7 @@ public class IconConfigurationTab : ITabItem {
                     using var textColor = ImRaii.PushColor(ImGuiCol.Text, KnownColor.Orange.Vector());
 
                     ImGui.SetCursorPosY(ImGui.GetContentRegionAvail().Y / 2.0f);
-                    ImGuiHelpers.CenteredText("Select an Icon to Edit Settings");
+                    ImGuiHelpers.CenteredText("选择一个图标来编辑设置");
                 }
                 else {
                     // Draw background texture
@@ -318,21 +318,21 @@ public class IconConfigurationTab : ITabItem {
                     ImGui.SetCursorPos(Vector2.Zero);
                     
                     // Draw settings
-                    ImGuiTweaks.Header($"Configure Marker #{currentSetting.IconId}");
+                    ImGuiTweaks.Header($"配置标记 #{currentSetting.IconId}");
                     using (ImRaii.PushIndent()) {
-                        settingsChanged |= ImGui.Checkbox("Hide Icon", ref currentSetting.Hide);
-                        settingsChanged |= ImGui.Checkbox("Allow Tooltip", ref currentSetting.AllowTooltip);
-                        settingsChanged |= ImGui.Checkbox("Allow Click Interaction", ref currentSetting.AllowClick);
+                        settingsChanged |= ImGui.Checkbox("隐藏图标", ref currentSetting.Hide);
+                        settingsChanged |= ImGui.Checkbox("启用提示框", ref currentSetting.AllowTooltip);
+                        settingsChanged |= ImGui.Checkbox("启用点击交互", ref currentSetting.AllowClick);
                 
                         ImGuiHelpers.ScaledDummy(5.0f);
-                        settingsChanged |= ImGuiTweaks.ColorEditWithDefault("Color", ref currentSetting.Color, KnownColor.White.Vector());
+                        settingsChanged |= ImGuiTweaks.ColorEditWithDefault("颜色", ref currentSetting.Color, KnownColor.White.Vector());
 
                         ImGuiHelpers.ScaledDummy(5.0f);
-                        settingsChanged |= ImGui.DragFloat("Icon Scale", ref currentSetting.Scale, 0.01f, 0.05f, 20.0f);
+                        settingsChanged |= ImGui.DragFloat("图标尺寸", ref currentSetting.Scale, 0.01f, 0.05f, 20.0f);
                     }
 
                     ImGui.SetCursorPosY(ImGui.GetContentRegionMax().Y - 25.0f * ImGuiHelpers.GlobalScale);
-                    if (ImGui.Button("Reset to Default", new Vector2(ImGui.GetContentRegionAvail().X, 25.0f * ImGuiHelpers.GlobalScale))) {
+                    if (ImGui.Button("重置为默认值", new Vector2(ImGui.GetContentRegionAvail().X, 25.0f * ImGuiHelpers.GlobalScale))) {
                         currentSetting.Reset();
                         System.IconConfig.Save();
                     }

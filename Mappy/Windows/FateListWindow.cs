@@ -19,8 +19,8 @@ namespace Mappy.Windows;
 public class FateListWindow : Window {
 	private const float ElementHeight = 48.0f;
     
-	public FateListWindow() : base("Mappy Fate List Window", new Vector2(300.0f, 400.0f)) {
-		AdditionalInfoTooltip = "Shows Fates for the zone you are currently in";
+	public FateListWindow() : base("Mappy 危命列表窗口", new Vector2(300.0f, 400.0f)) {
+		AdditionalInfoTooltip = "显示您当前所在区域的危命";
 	}
 
 	public override void PreOpenCheck() {
@@ -32,7 +32,7 @@ public class FateListWindow : Window {
 			using (var toolbarChild = ImRaii.Child("fatelist_toolbar", new Vector2(ImGui.GetContentRegionAvail().X, 32.0f))) {
 				if (toolbarChild) {
 					using var color = ImRaii.PushColor(ImGuiCol.Button, ImGui.GetStyle().Colors[(int) ImGuiCol.ButtonActive], System.SystemConfig.SetFlagOnFateClick);
-					if (ImGuiTweaks.IconButtonWithSize(Service.PluginInterface.UiBuilder.IconFontFixedWidthHandle, FontAwesomeIcon.Flag, "flag_on_click", ImGuiHelpers.ScaledVector2(23.0f), "Set Flag On Click")) {
+					if (ImGuiTweaks.IconButtonWithSize(Service.PluginInterface.UiBuilder.IconFontFixedWidthHandle, FontAwesomeIcon.Flag, "flag_on_click", ImGuiHelpers.ScaledVector2(23.0f), "点击时标记")) {
 						System.SystemConfig.SetFlagOnFateClick = !System.SystemConfig.SetFlagOnFateClick;
 						SystemConfig.Save();
 					}
@@ -68,7 +68,7 @@ public class FateListWindow : Window {
 
 					var timeRemaining = FateContextExtensions.GetTimeRemaining(fate);
 					if (timeRemaining != TimeSpan.Zero) {
-						var timeString = $"{(fate->IsBonus ? "Exp Bonus!\t" : string.Empty)}{SeIconChar.Clock.ToIconString()} {FateContextExtensions.GetTimeRemaining(fate):mm\\:ss}";
+						var timeString = $"{(fate->IsBonus ? "经验加成！\t" : string.Empty)}{SeIconChar.Clock.ToIconString()} {FateContextExtensions.GetTimeRemaining(fate):mm\\:ss}";
 						ImGui.SameLine(ImGui.GetContentRegionMax().X - ImGui.CalcTextSize(timeString).X);
 						ImGui.Text(timeString);
 					}
@@ -76,7 +76,7 @@ public class FateListWindow : Window {
 			}
 		}
 		else {
-			const string text = "No FATE's available";
+			const string text = "暂无危命可打";
 			var textSize = ImGui.CalcTextSize(text);
 			ImGui.SetCursorPosX(ImGui.GetContentRegionAvail().X / 2.0f - textSize.X / 2.0f);
 			ImGui.SetCursorPosY(ImGui.GetContentRegionAvail().Y / 2.0f - textSize.Y / 2.0f);

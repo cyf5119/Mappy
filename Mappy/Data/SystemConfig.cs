@@ -9,28 +9,28 @@ using KamiLib.Configuration;
 namespace Mappy.Data;
 
 public enum CenterTarget {
-    [Description("Disabled")]
+    [Description("禁用")]
     Disabled = 0,
 
-    [Description("Player")]
+    [Description("玩家")]
     Player = 1,
 
-    [Description("Map")]
+    [Description("地图")]
     Map = 2,
 }
 
 [Flags]
 public enum FadeMode {
-    [Description("Always")]
+    [Description("总是")]
     Always = 1 << 0,
     
-    [Description("When Moving")]
+    [Description("仅移动时")]
     WhenMoving = 1 << 2,
     
-    [Description("When Focused")]
+    [Description("仅聚焦时")]
     WhenFocused = 1 << 3,
     
-    [Description("When Unfocused")]
+    [Description("仅未聚焦时")]
     WhenUnFocused = 1 << 4,
 }
 
