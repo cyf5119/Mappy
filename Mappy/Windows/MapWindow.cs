@@ -53,7 +53,8 @@ public class MapWindow : Window {
         IsOpen = AgentMap.Instance()->IsAgentActive();
 
         if (System.SystemConfig.KeepOpen) IsOpen = true;
-        if (Service.ClientState is { IsLoggedIn: false } or { IsPvP: true }) IsOpen = false;
+        if (Service.ClientState is { IsLoggedIn: false }) IsOpen = false;
+        // if (Service.ClientState is { IsLoggedIn: false } or { IsPvP: true }) IsOpen = false;
     }
     
     public override unsafe void OnOpen() {
